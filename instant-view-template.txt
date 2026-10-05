@@ -1,15 +1,24 @@
 ~version: "2.1"
 
+# Только наша статья.
 ?exists: //article[has-class("dogma-article")]
 
-# Карусель Telegram Instant View
+# Каждый блок iv-gallery становится отдельной нативной каруселью Telegram.
+# На странице их три: Парк, Двор, Зимние кадры.
 @replace_tag(<slideshow>): //div[has-class("iv-gallery")]
+
+# Подписи под каждой каруселью.
 @replace_tag(<figcaption>): //p[has-class("gallery-note")]
 
+# Метаданные статьи.
 title: //h1
 subtitle: //p[has-class("subtitle")]
 author: //meta[@name="author"]/@content
 description: //meta[@name="description"]/@content
 site_name: //meta[@property="og:site_name"]/@content
-image_url: (//div[has-class("iv-gallery")]/img)[1]/@src
+
+# Первая картинка первой карусели для превью.
+image_url: (//div[has-class("iv-gallery")][1]/img)[1]/@src
+
+# Тело статьи, внутри которого уже находятся три slideshow.
 body: //article[has-class("dogma-article")]
