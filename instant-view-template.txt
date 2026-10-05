@@ -1,13 +1,19 @@
 ~version: "2.1"
 
-# Только наша статья.
+# Применяем шаблон только к нашей статье DOGMA EVO.
 ?exists: //article[has-class("dogma-article")]
 
-# Каждый блок iv-gallery становится отдельной нативной каруселью Telegram.
-# На странице их три: Парк, Двор, Зимние кадры.
+# Верхняя плашка с данными проекта.
+# CSS сайта в Instant View не переносится, поэтому оформляем её как отдельный выделенный блок.
+@replace_tag(<blockquote>): //div[has-class("project-meta")]
+
+# Три галереи превращаем в три отдельные нативные карусели Telegram.
+# 1) Парк: C_01, C_02, C_03, C_04, C_05
+# 2) Двор: сначала C_08, затем C_07
+# 3) Зимние: сначала C_06 Winter, затем C_02 Winter
 @replace_tag(<slideshow>): //div[has-class("iv-gallery")]
 
-# Подписи под каждой каруселью.
+# Подписи под каруселями.
 @replace_tag(<figcaption>): //p[has-class("gallery-note")]
 
 # Метаданные статьи.
@@ -17,8 +23,9 @@ author: //meta[@name="author"]/@content
 description: //meta[@name="description"]/@content
 site_name: //meta[@property="og:site_name"]/@content
 
-# Первая картинка первой карусели для превью.
+# Для превью используем первый кадр первой (большой) карусели,
+# которая сейчас расположена сразу под блоком «8 картинок, которые начинались с четырёх».
 image_url: (//div[has-class("iv-gallery")][1]/img)[1]/@src
 
-# Тело статьи, внутри которого уже находятся три slideshow.
+# Основное тело статьи. Порядок текста и всех трёх каруселей берётся прямо из актуального index.html.
 body: //article[has-class("dogma-article")]
