@@ -1,0 +1,15 @@
+~version: "2.1"
+
+?exists: //article[has-class("dogma-article")]
+
+# Карусель Telegram Instant View
+@replace_tag(<slideshow>): //div[has-class("iv-gallery")]
+@replace_tag(<figcaption>): //p[has-class("gallery-note")]
+
+title: //h1
+subtitle: //p[has-class("subtitle")]
+author: //meta[@name="author"]/@content
+description: //meta[@name="description"]/@content
+site_name: //meta[@property="og:site_name"]/@content
+image_url: (//div[has-class("iv-gallery")]/img)[1]/@src
+body: //article[has-class("dogma-article")]
